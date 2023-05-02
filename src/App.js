@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function App() {
-  const [data, setData] = useState({total_user: 0, total_product: 0, percen: 0 ,doughnut: {
+  const [data, setData] = useState({total_user: 0, total_product: 0, percen: 0, product_done: 0 ,doughnut: {
     labels: ["Red", "Blue"],
     datasets: [
       {
@@ -25,7 +25,7 @@ function App() {
         let dataResult = await getData();
         let doneData = dataResult.index + 1;
 
-        setData({total_user: dataResult.total_user, total_product: dataResult.total_product, percen: ((Math.round(dataResult.index + 1) * 100) / dataResult.total_user).toFixed(2), doughnut: {
+        setData({total_user: dataResult.total_user, total_product: dataResult.total_product, percen: ((Math.round(dataResult.index + 1) * 100) / dataResult.total_user).toFixed(2), product_done: dataResult.number_product_done, doughnut: {
           labels: ["Red", "Blue"],
           datasets: [
             {
@@ -51,8 +51,12 @@ function App() {
     <div className="container d-flex flex-column align-items-center">
       <h1>Get Data Status</h1>
       <h3 style={{color: "blue", fontWeight: "bold"}}>
-        Total User : {data.total_user} | Total Product : {data.total_product}
+        Done :  <span style={{color: "red"}}>{data.product_done.toLocaleString("en")}</span> / {data.total_product.toLocaleString("en")} Products
       </h3>
+      <h3 style={{color: "blue", fontWeight: "bold"}}>
+         Total user: {data.total_user.toLocaleString("en")}
+      </h3>
+      
       <h2 style={{color: "blue", fontWeight: "bold"}}>
         {data.percen} %
       </h2>
